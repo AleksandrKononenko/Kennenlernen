@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> "Jaaa" &#127881;</title>
+    <style>
+
+    body, html {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    color: white;
+    overflow-x: hidden;
+    position: relative;
+    
+    /* Фон для десктопів */
+    background: url("pictures/rosenfeld.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Пелюстки */
+.petal {
+    position: absolute;
+    width: 30px;
+    height: auto;
+    pointer-events: none;
+    opacity: 0.9;
+    z-index: 1;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(var(--fall-height)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    max-width: 90%;
+    margin: auto;
+}
+
+p {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    margin-bottom: 1.2rem;
+    text-align: justify;
+}
+
+img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+.text {
+    margin-top: 30px;
+    text-align: justify;
+}
+
+/* Мобільні екрани */
+@media (max-width: 768px) {
+    body, html {
+        background-attachment: scroll; /* замість fixed для мобільних */
+        background-size: cover;
+        background-position: center center;
+    }
+
+    p, h1, h3 {
+        text-align: left;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    .content p img {
+        display: block;
+        margin: 0.5rem auto;
+    }
+
+    pre {
+        white-space: normal;
+    }
+}
+
+/* Дуже великі екрани */
+@media (min-width: 1200px) {
+    .content {
+        max-width: 90%;
+    }
+}
+
+    button {
+        z-index: 0;
+        position: fixed;
+      font-size: 18px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 10px;
+      border: none;
+      background: #4CAF50;
+      color: black;
+    }
+    button:hover {
+      background: #45a049;
+    }
+
+    </style>
+</head>
+
+<body>
+
+    <audio id="mySong" loop>
+        <source src="audio/vielleicht.mp3" type="audio/mpeg">
+        Ваш браузер не підтримує відтворення аудіо.
+      </audio>
+    
+      <!-- Кнопка Play/Pause -->
+      <button id="playPauseBtn">▶️ Play</button>
+
+    <div class="content"; class="text">  
+        <h1>Твоя відповідь "Так" <img src="https://i.gifer.com/7DZz.gif" alt="Feuerwerk" width="150" ></h1>
+
+        <h3>Подумай</h3>
+
+        <p>  Я коли тебе побачив, зрозумів що ти вкрала моє серденько. Ми поспілкувалися з тобою не довго, алея зрозумів,
+            що ти та сама)
+            З нетерпінням чекаю зустрічі з тобою. 
+            Посміхнися, мармеладка. 
+        </p>
+        <p style="text-align: center;">
+                <img src="pictures/lacheln_mein.jpg" alt="Lacheln" width="300">
+        </p>
+
+
+            <p style="text-align: center;">&#11107;</p>
+                     
+
+                <p>
+                    Може все ж таки не будеш думати, а ми почнемо діяти? 🙏🥺
+                </p>
+
+                <p style="text-align: center;"><img src="pictures/bay.jpg" alt="Bay" width="500" ></p>
+
+    </div>
+    
+
+    <script>
+        const petals = [
+            "pictures/petal1.png",
+            "pictures/petal2.png",
+            "pictures/petal3.png"
+        ];
+    
+        function createPetal() {
+            const petal = document.createElement("img");
+            petal.classList.add("petal");
+            const randomPetal = petals[Math.floor(Math.random() * petals.length)];
+            petal.src = randomPetal;
+            petal.style.left = Math.random() * 100 + "vw";
+            petal.style.width = (20 + Math.random() * 40) + "px";
+    
+            // Позиція верхньої видимої частини екрана
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const viewportHeight = window.innerHeight;
+            petal.style.top = (scrollTop - 50) + "px";
+            petal.style.setProperty('--fall-height', viewportHeight + 100 + "px");
+    
+            // Плавна швидкість падіння
+            const duration = 15 + Math.random() * 5; // 15–20 секунд
+            petal.style.animation = `fall ${duration}s linear forwards`;
+    
+            document.body.appendChild(petal);
+    
+            setTimeout(() => { petal.remove(); }, duration * 1000);
+        }
+    
+        setInterval(createPetal, 300); // створюємо пелюстки кожні 300ms
+
+        const song = document.getElementById("mySong");
+        const btn = document.getElementById("playPauseBtn");
+
+    btn.addEventListener("click", () => {
+      if (song.paused) {
+        song.play();
+        btn.textContent = "⏸ Pause";
+      } else {
+        song.pause();
+        btn.textContent = "▶️ Play";
+      }
+    });
+
+    </script>
+    
+
+</body>
+
+</html>
